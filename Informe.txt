@@ -1,0 +1,9 @@
+Area: Practicas Profesionalizantes.
+Fecha: 10/06/2026.
+Actividad Práctica: Sistema de administración de preceptoria.
+Alumnos: Cardena Lautaro, Rios Juan, Miras Madelaine y Verón Kevin.
+
+En el dia de la fecha nos comunicamos con una potencial usuaria llamada Hassan Carolina perteneciente al área administratica de preceptoria, le preguntamos
+directamente ¿Qué necesidades tienen o qué soluciones necesitan en preceptoria? Nosotros le sugerimos un sistema de asistecia en el cual se les notifica
+a preceptoria y alumnos del respectivo curso a través de un medio de comunicacion de preferencia la ausencia los profesores.
+Ella respondio que el dia de mañana 19/06/2026 nos dará una respuesta previamente consultada por otras miembros del área.
