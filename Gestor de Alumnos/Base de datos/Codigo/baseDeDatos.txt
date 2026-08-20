@@ -1,0 +1,66 @@
+DROP DATABASE IF EXISTS gestor_alumnos;
+CREATE DATABASE gestor_alumnos;
+USE gestor_alumnos;
+
+CREATE TABLE tutores(
+  Id_Tutor INT NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(25) NOT NULL,
+  apellido VARCHAR(25) NOT NULL,
+  PRIMARY KEY (Id_Tutor)
+);
+
+CREATE TABLE cursos(
+  Id_Curso INT NOT NULL AUTO_INCREMENT,
+  anio INT NOT NULL,
+  division INT NOT NULL,
+  comision VARCHAR(10) NOT NULL,
+  especialidad VARCHAR(30) NOT NULL,
+  turno VARCHAR(30) NOT NULL,
+  ciclo VARCHAR(20) NOT NULL,
+  PRIMARY KEY (Id_Curso)
+);
+
+CREATE TABLE estudiantes(
+  dni INT NOT NULL CHECK (dni > 10000000 AND dni < 100000000),
+  nombre VARCHAR(25) NOT NULL,
+  apellido VARCHAR(25) NOT NULL,
+  Id_Curso INT NOT NULL, 
+  PRIMARY KEY (dni),
+  CONSTRAINT fk_estudiante_tutor
+  FOREIGN KEY (Id_Curso) REFERENCES cursos (Id_Curso) 
+);
+ 
+CREATE TABLE telefonos(
+  Id_Telefono INT NOT NULL AUTO_INCREMENT,
+  tipo_telefono VARCHAR(20) NULL,
+  codigo_area INT NULL,
+  numero INT NOT NULL CHECK (numero > 1000000 AND numero < 100000000),
+  Id_Tutor INT NOT NULL,
+  PRIMARY KEY (Id_Telefono),
+  CONSTRAINT fk_telefono_tutor
+  FOREIGN KEY (Id_Tutor) REFERENCES tutores (Id_Tutor) 
+);
+  
+CREATE TABLE alumnosYTutores(
+  Dni INT NOT NULL CHECK (Dni > 10000000 AND Dni < 100000000),
+  Id_Tutor INT NOT NULL,
+  PRIMARY KEY (Dni, Id_Tutor)
+);
+  
+INSERT INTO cursos (Anio, Division, Comision, Especialidad, Turno, Ciclo)
+VALUES (5, 2, '522', 'programacion', 'vespertino', 'superior');
+  
+INSERT INTO tutores (Id_Tutor, Nombre, Apellido)
+VALUES (1, 'juan', 'rios');
+  
+INSERT INTO estudiantes (dni, Nombre, Apellido, Id_curso)
+VALUES (12343345, 'facundo', 'rios', 1 , 1);
+  
+INSERT INTO telefonos (Id_Telefono, CodigoArea, Tipo, Numero)
+VALUES (1, 11, 'celular', 34593475);
+
+SELECT * FROM tutores;
+SELECT * FROM telefonos;
+SELECT * FROM estudiantes;  
+SELECT * FROM cursos;
+SELECT * FROM alumnosYTutores;
