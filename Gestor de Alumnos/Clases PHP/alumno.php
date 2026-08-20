@@ -3,11 +3,13 @@
         private int $dni;
         private string $nombre;
         private string $apellido;
+        private int $id_curso;
 
-        function __construct(int $dni, string $nombre, string $apellido) {
+        function __construct(int $dni, string $nombre, string $apellido, int $id_curso) {
             $this -> dni = $dni;
             $this -> nombre = $nombre;
             $this -> apellido = $apellido;
+            $this -> id_curso = $id_curso;
         }
             
         public function getDni(): int {
@@ -22,6 +24,10 @@
             return $this -> apellido;
         }
     
+        public function getIdCurso1(): int {
+            return $this -> id_curso;
+        }
+
         public function setDni(int $dni): void {
             $this -> dni = $dni;
         }
@@ -34,5 +40,8 @@
             $this -> apellido = $apellido;
         }
 
+        public function setIdCurso1(string $id_curso): void {
+            $this -> id_curso = $id_curso;
+        }
     }
 ?>

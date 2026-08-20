@@ -1,88 +1,66 @@
--- MySQL Workbench Forward Engineering
+DROP DATABASE IF EXISTS gestor_alumnos;
+CREATE DATABASE gestor_alumnos;
+USE gestor_alumnos;
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+CREATE TABLE tutores(
+  Id_Tutor INT NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(25) NOT NULL,
+  apellido VARCHAR(25) NOT NULL,
+  PRIMARY KEY (Id_Tutor)
+);
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
+CREATE TABLE cursos(
+  Id_Curso INT NOT NULL AUTO_INCREMENT,
+  anio INT NOT NULL,
+  division INT NOT NULL,
+  comision VARCHAR(10) NOT NULL,
+  especialidad VARCHAR(30) NOT NULL,
+  turno VARCHAR(30) NOT NULL,
+  ciclo VARCHAR(20) NOT NULL,
+  PRIMARY KEY (Id_Curso)
+);
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE TABLE estudiantes(
+  dni INT NOT NULL CHECK (dni > 10000000 AND dni < 100000000),
+  nombre VARCHAR(25) NOT NULL,
+  apellido VARCHAR(25) NOT NULL,
+  Id_Curso INT NOT NULL, 
+  PRIMARY KEY (dni),
+  CONSTRAINT fk_estudiante_tutor
+  FOREIGN KEY (Id_Curso) REFERENCES cursos (Id_Curso) 
+);
+ 
+CREATE TABLE telefonos(
+  Id_Telefono INT NOT NULL AUTO_INCREMENT,
+  tipo_telefono VARCHAR(20) NULL,
+  codigo_area INT NULL,
+  numero INT NOT NULL CHECK (numero > 1000000 AND numero < 100000000),
+  Id_Tutor INT NOT NULL,
+  PRIMARY KEY (Id_Telefono),
+  CONSTRAINT fk_telefono_tutor
+  FOREIGN KEY (Id_Tutor) REFERENCES tutores (Id_Tutor) 
+);
+  
+CREATE TABLE alumnosYTutores(
+  Dni INT NOT NULL CHECK (Dni > 10000000 AND Dni < 100000000),
+  Id_Tutor INT NOT NULL,
+  PRIMARY KEY (Dni, Id_Tutor)
+);
+  
+INSERT INTO cursos (Anio, Division, Comision, Especialidad, Turno, Ciclo)
+VALUES (5, 2, '522', 'programacion', 'vespertino', 'superior');
+  
+INSERT INTO tutores (Id_Tutor, Nombre, Apellido)
+VALUES (1, 'juan', 'rios');
+  
+INSERT INTO estudiantes (dni, Nombre, Apellido, Id_curso)
+VALUES (12343345, 'facundo', 'rios', 1 , 1);
+  
+INSERT INTO telefonos (Id_Telefono, CodigoArea, Tipo, Numero)
+VALUES (1, 11, 'celular', 34593475);
 
--- -----------------------------------------------------
--- Table `mydb`.`Tutor`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Tutor` (
-  `Id.Tutor` INT NOT NULL,
-  `Nombre` VARCHAR(25) NULL,
-  `Apellido` VARCHAR(25) NULL,
-  PRIMARY KEY (`Id.Tutor`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`Curso`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Curso` (
-  `Id.Curso` INT NOT NULL,
-  `Año` INT NULL,
-  `Division` INT NULL,
-  PRIMARY KEY (`Id.Curso`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`Estudiantes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Estudiantes` (
-  `Id.Estudiante` INT NOT NULL,
-  `Nombre` VARCHAR(25) NULL,
-  `Apellido` VARCHAR(25) NULL,
-  `Id.Curso` INT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Id.Tutor` INT NOT NULL,
-  PRIMARY KEY (`Id.Estudiante`),
-  CONSTRAINT `DNI.Tutor`
-    FOREIGN KEY (`Id.Tutor`)
-    REFERENCES `mydb`.`Tutor` (`Id.Tutor`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `Id.Curso`
-    FOREIGN KEY (`Id.Curso`)
-    REFERENCES `mydb`.`Curso` (`Id.Curso`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-
-CREATE INDEX `DNI.Tutor_idx` ON `mydb`.`Estudiantes` (`Id.Tutor` ASC) VISIBLE;
-
-CREATE INDEX `Id.Curso_idx` ON `mydb`.`Estudiantes` (`Id.Curso` ASC) VISIBLE;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`Telefono`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Telefono` (
-  `Id.Telefono` INT NOT NULL,
-  `CodigoArea` INT NULL,
-  `Tipo` VARCHAR(20) NULL,
-  `Numero` INT NULL,
-  `Id.Tutor` INT NULL,
-  PRIMARY KEY (`Id.Telefono`),
-  CONSTRAINT `DNI.Tutor`
-    FOREIGN KEY (`Id.Tutor`)
-    REFERENCES `mydb`.`Tutor` (`Id.Tutor`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX `DNI.Tutor_idx` ON `mydb`.`Telefono` (`Id.Tutor` ASC) VISIBLE;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+SELECT * FROM tutores;
+SELECT * FROM telefonos;
+SELECT * FROM estudiantes;  
+SELECT * FROM cursos;
+SELECT * FROM alumnosYTutores;

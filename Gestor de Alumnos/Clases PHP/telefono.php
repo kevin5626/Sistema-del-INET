@@ -1,15 +1,21 @@
 <?php
     class Telefono {
+        private ?int $id_telefono = null;
         private string $tipoTelefono;
         private int $codigoArea;
         private int $numero;
-        private int $idTutor;
+        private int $id_tutor;
 
-        public function __construct(string $tipoTelefono, int $codigoArea, int $numero, int $idTutor) {
+        public function __construct(?int $id_telefono, string $tipoTelefono, int $codigoArea, int $numero, int $id_tutor) {
+            $this -> id_telefono = $id_telefono;
             $this -> tipoTelefono = $tipoTelefono;
             $this -> codigoArea = $codigoArea;
             $this -> numero = $numero;
-            $this -> idTutor = $idTutor;
+            $this -> id_tutor = $id_tutor;
+        }
+
+        public function getIdTelefono(): ?int {
+            return $this -> id_telefono;
         }
 
         public function getTipoTelefono(): string {
@@ -24,9 +30,13 @@
             return $this -> numero;
         } 
 
-        public function getIdTutor(): int {
-            return $this -> idTutor;
+        public function getIdTutor1(): int {
+            return $this -> id_tutor;
         } 
+
+        public function setIdTelefono(?int $id_telefono): void {
+          $this -> id_telefono = $id_telefono;
+        }
 
         public function setTipoTelefono(string $tipoTelefono): void {
           $this -> tipoTelefono = $tipoTelefono;
@@ -40,8 +50,8 @@
           $this -> numero = $numero;
         }
 
-        public function setIdTutor(int $idTutor): void {
-          $this -> idTutor = $idTutor;
+        public function setIdTutor(int $id_tutor): void {
+          $this -> id_tutor = $id_tutor;
         }
     }
 ?>

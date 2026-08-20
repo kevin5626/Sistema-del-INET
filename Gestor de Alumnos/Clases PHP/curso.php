@@ -1,5 +1,6 @@
 <?php
     class Curso {
+        private ?int $id_curso = null;
         private int $anio;
         private int $division;
         private string $comision;
@@ -7,7 +8,8 @@
         private string $turno;
         private string $ciclo;
 
-        function __construct(int $anio, int $division, string $comision, string $especialidad, string $turno, string $ciclo) {
+        function __construct(?int $id_curso, int $anio, int $division, string $comision, string $especialidad, string $turno, string $ciclo) {
+            $this -> id_curso = $id_curso;
             $this -> anio = $anio;
             $this -> division = $division;
             $this -> comision = $comision;
@@ -16,6 +18,10 @@
             $this -> ciclo = $ciclo;
         }
             
+        public function getIdCurso(): ?int {
+            return $this -> id_curso;
+        }
+
         public function getAnio(): int {
             return $this -> anio;
         }
@@ -38,6 +44,10 @@
 
         public function getCiclo(): string {
             return $this -> ciclo;
+        }
+
+        public function setIdCurso(?int $id_curso): void {
+            $this -> id_curso = $id_curso;
         }
     
         public function setAnio(int $anio): void {
